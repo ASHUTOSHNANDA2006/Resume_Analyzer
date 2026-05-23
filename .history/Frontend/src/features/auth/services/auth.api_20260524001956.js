@@ -1,0 +1,14 @@
+import axios from 'axios';
+
+
+export async function register(username, email, password) {
+
+    try{
+        axios.post('http://localhost:5000/api/auth/register', {
+        username,
+        email,
+        password
+    },{
+        withCredentials: true
+    })
+}
