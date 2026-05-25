@@ -1,1 +1,0 @@
-import {getAllInterviewReports, generateInterviewReport} from "../services/interview.api"
