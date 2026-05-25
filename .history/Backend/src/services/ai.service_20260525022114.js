@@ -1,0 +1,289 @@
+// const {GoogleGenAI} = require("@google/genai")
+// const {z} = require("zod")
+// const {zodToJsonSchema} = require("zod-to-json-schema")
+
+
+
+
+// const ai = new GoogleGenAI({
+//     apiKey: process.env.GOOGLE_GENAI_API_KEY
+// })
+
+// const interviewReportSchema = z.object({
+//     matchScore: z.number().min(0).max(100).describe("The overall match score between the candidate and the job describe, calculated based on various factors such as skills, experience, etc. on a scale of 0 to 100, where 100 indicates a perfect match."),
+//     atsScore: z.number().min(0).max(100).describe("The ATS score of the candidate's resume, which indicates how well the resume is optimized for Applicant Tracking Systems used by employers to screen resumes. The score is calculated based on factors such as keyword usage, formatting, and relevance to the job describe, on a scale of 0 to 100, where 100 indicates a highly optimized resume for ATS."),
+//     technicalQuestions: z.array(z.object({
+//     question: z.string().describe("The technical question can be asked in the interview"),
+//     intention: z.string().describe("The intention of interviewer behind asking this question in the interview"),
+//     answer: z.string().describe("How to answer this question, what points to cover, what approach to take etc.")
+//     })).describe("A list of technical questions that can be asked in the interview, along with the intention behind asking those questions and how to answer them."),
+//     behavioralQuestions: z.array(z.object({
+//     question: z.string().describe("The behavioral question can be asked in the interview"),
+//     intention: z.string().describe("The intention of interviewer behind asking this question in the interview"),
+//     answer: z.string().describe("How to answer this question, what points to cover, what approach to take etc.")
+//     })).describe("A list of behavioral questions that can be asked in the interview, along with the intention behind asking those questions and how to answer them."),
+//     skillGaps: z.array(z.object({
+//     skill: z.string().describe("The skill in which the candidate is lacking"),
+//     severity: z.enum(['Low', 'Medium', 'High']).describe("The severity of the skill gap, whether it is low, medium or high")
+//     })).describe("A list of skill gaps in the candidate's profile along with the severity of each skill gap."),
+//     preparationPlan: z.array(z.object({
+//     day: z.number().describe("The day number in the preparation plan, starting from 1 realistically."),
+//     focus: z.string().describe("The main focus of this day int the preparation plan, e.g. Data Structures, System Design, mock interviews etc."),
+//     tasks: z.array(z.string()).describe("List of tasks to be completed on this day to follow the preparation plan completed realistically, e.g. read a specific book, solve a set of problems, watch a set of videos etc.")
+//     })).describe("A day-wise preparation plan for the candidate to prepare for the interview, with specific focus and tasks for each day so that they can prepare effectively and realistaically.")
+// })
+
+
+// async function generateInterviewReport({resume,selfDescription,jobDescription}) {
+    
+//     const prompt = `Genrate an interview report for a candidate based on the following information:
+//                     Resume: ${resume}
+//                     Self Description: ${selfDescription}
+//                     Job Description: ${jobDescription}
+//                     IMPORTANT:
+//                     - Follow the provided JSON schema exactly.
+//                     - Return ONLY valid JSON.
+//                     - Do not return markdown.
+//                     - Do not wrap response in backticks.
+//                 `;
+    
+//     const response = await ai.models.generateContent({
+//         model: "gemini-2.0-flash",
+//         contents: prompt,
+//         config: {
+//             responseMimeType: "application/json",
+//             responseSchema: zodToJsonSchema(interviewReportSchema)
+//         }
+//    });
+
+//     console.log("Generated Interview Report:", response.text)
+
+
+
+// }
+
+// module.exports = generateInterviewReport
+
+const OpenAI = require("openai");
+
+const client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+});
+
+
+
+async function generateInterviewReport({
+    resume,
+    selfDescription,
+    jobDescription
+}) {
+
+    try {
+
+        const response = await client.responses.create({
+
+            model: "gpt-4o-mini",
+
+            input: `
+Generate a detailed interview report for the candidate.
+
+Resume:
+${resume}
+
+Self Description:
+${selfDescription}
+
+Job Description:
+${jobDescription}
+
+Return ONLY valid JSON.
+            `,
+
+            text: {
+                format: {
+                    type: "json_schema",
+
+                    name: "interview_report",
+
+                    strict: true,
+
+                    schema: {
+
+                        type: "object",
+
+                        additionalProperties: false,
+
+                        properties: {
+
+                            matchScore: {
+                                type: "number"
+                            },
+
+                            atsScore: {
+                                type: "number"
+                            },
+
+                            technicalQuestions: {
+                                type: "array",
+
+                                items: {
+                                    type: "object",
+
+                                    additionalProperties: false,
+
+                                    properties: {
+                                        question: {
+                                            type: "string"
+                                        },
+
+                                        intention: {
+                                            type: "string"
+                                        },
+
+                                        answer: {
+                                            type: "string"
+                                        }
+                                    },
+
+                                    required: [
+                                        "question",
+                                        "intention",
+                                        "answer"
+                                    ]
+                                }
+                            },
+
+                            behavioralQuestions: {
+                                type: "array",
+
+                                items: {
+                                    type: "object",
+
+                                    additionalProperties: false,
+
+                                    properties: {
+                                        question: {
+                                            type: "string"
+                                        },
+
+                                        intention: {
+                                            type: "string"
+                                        },
+
+                                        answer: {
+                                            type: "string"
+                                        }
+                                    },
+
+                                    required: [
+                                        "question",
+                                        "intention",
+                                        "answer"
+                                    ]
+                                }
+                            },
+
+                            skillGaps: {
+                                type: "array",
+
+                                items: {
+                                    type: "object",
+
+                                    additionalProperties: false,
+
+                                    properties: {
+                                        skill: {
+                                            type: "string"
+                                        },
+
+                                        severity: {
+                                            type: "string",
+                                            enum: ["Low", "Medium", "High"]
+                                        }
+                                    },
+
+                                    required: [
+                                        "skill",
+                                        "severity"
+                                    ]
+                                }
+                            },
+
+                            preparationPlan: {
+                                type: "array",
+
+                                items: {
+                                    type: "object",
+
+                                    additionalProperties: false,
+
+                                    properties: {
+
+                                        day: {
+                                            type: "number"
+                                        },
+
+                                        focus: {
+                                            type: "string"
+                                        },
+
+                                        tasks: {
+                                            type: "array",
+
+                                            items: {
+                                                type: "string"
+                                            }
+                                        }
+                                    },
+
+                                    required: [
+                                        "day",
+                                        "focus",
+                                        "tasks"
+                                    ]
+                                }
+                            }
+                        },
+
+                        required: [
+                            "matchScore",
+                            "atsScore",
+                            "technicalQuestions",
+                            "behavioralQuestions",
+                            "skillGaps",
+                            "preparationPlan"
+                        ]
+                    }
+                }
+            }
+        });
+
+
+
+        const result = JSON.parse(response.output_text);
+
+
+
+        console.log(
+            "Generated Interview Report:\n",
+            JSON.stringify(result, null, 2)
+        );
+
+
+
+        return result;
+
+    } catch (error) {
+
+        console.log("OpenAI Error:", error);
+
+        return {
+            success: false,
+            message: "Failed to generate interview report"
+        };
+    }
+}
+
+
+
+module.exports = generateInterviewReport;

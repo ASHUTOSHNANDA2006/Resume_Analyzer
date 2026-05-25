@@ -1,0 +1,16 @@
+import {getAllInterviewReports, generateInterviewReport, generateInterviewReportById} from "../services/interview.api"
+import {use}
+import { useContext } from "react"
+import { InterviewContext } from "../interview.context"
+
+
+
+export const useInterview = () => {
+    
+    const context = useContext(InterviewContext)
+
+    if(!context){
+        throw new Error("")
+    }
+
+}

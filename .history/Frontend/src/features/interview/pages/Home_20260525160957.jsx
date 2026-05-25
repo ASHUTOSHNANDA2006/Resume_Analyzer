@@ -1,0 +1,128 @@
+import React from 'react'
+import "../style/home.scss"
+
+const Home = () => {
+  return (
+    <div className='interview-container'>
+      {/* Header */}
+      <header className="interview-header">
+        <div className="header-content">
+          <div className="logo-section">
+            <div className="logo-icon">🧠</div>
+            <span className="logo-text">Interview<span className="logo-highlight">Intel</span></span>
+          </div>
+          <nav className="header-nav">
+            <a href="#">Dashboard</a>
+            <a href="#">Reports</a>
+            <a href="#">Templates</a>
+          </nav>
+          <div className="header-actions">
+            <button className="notification-btn">🔔</button>
+            <div className="profile-icon">👤</div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className='interview-main'>
+        {/* Title Section */}
+        <div className="title-section">
+          <h1>Create Your Custom <span className="highlight">Interview Plan</span></h1>
+          <p className="subtitle">Let our AI analyze the job requirements and your unique profile to build a winning strategy.</p>
+        </div>
+
+        {/* Main Content */}
+        <div className="content-wrapper">
+          {/* Left Section - Job Description */}
+          <div className="section left-section">
+            <div className="section-header">
+              <div className="section-title">
+                <span className="icon">📋</span>
+                <h2>TARGET JOB DESCRIPTION</h2>
+              </div>
+              <span className="badge required">REQUIRED</span>
+            </div>
+            <div className="input-group">
+              <textarea
+                name="jobDescription"
+                id="jobDescription"
+                placeholder="Paste the full job description here...
+e.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'"
+                className="textarea-input"
+              />
+              <span className="char-count">0 / 5000 chars</span>
+            </div>
+          </div>
+
+          {/* Right Section - Profile */}
+          <div className="section right-section">
+            <div className="section-header">
+              <div className="section-title">
+                <span className="icon">👤</span>
+                <h2>YOUR PROFILE</h2>
+              </div>
+              <span className="badge required">REQUIRED</span>
+            </div>
+
+            {/* Resume Upload */}
+            <div className="profile-input-group">
+              <div className="profile-label">
+                <p>Upload Resume</p>
+                <span className="file-results">TEST RESULTS</span>
+              </div>
+              <label htmlFor="resume" className="file-upload-area">
+                <div className="upload-icon">☁️</div>
+                <p>Click to upload or drag & drop</p>
+                <span className="file-info">PDF or DOCX (Max 5MB)</span>
+              </label>
+              <input
+                hidden
+                type="file"
+                name="resume"
+                id="resume"
+                accept=".pdf,.docx"
+              />
+            </div>
+
+            {/* Divider */}
+            <div className="divider">
+              <span>OR</span>
+            </div>
+
+            {/* Self Description */}
+            <div className="profile-input-group">
+              <div className="profile-label">
+                <p>Quick Self-description</p>
+              </div>
+              <textarea
+                name="selfDescription"
+                id="selfDescription"
+                placeholder="Briefly describe your experience, key skills, and years of experience if you don't have a resume handy..."
+                className="textarea-input textarea-small"
+              />
+            </div>
+
+            {/* Info Note */}
+            <div className="info-note">
+              <span className="info-icon">ℹ️</span>
+              <p>Either a <strong>Resume or a Self Description</strong> is required to generate a personalized plan.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Section */}
+        <div className="footer">
+          <div className="ai-badge">
+            <span>✨ AI-Powered Strategy Generation • Approx 30s</span>
+          </div>
+          <button className="btn-primary">
+            <span className="btn-icon">⚡</span>
+            Generate My Interview Strategy
+          </button>
+        </div>
+      </div>
+    </main>
+  )
+}
+
+export default Home
