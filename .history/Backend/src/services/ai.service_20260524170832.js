@@ -1,0 +1,1 @@
+const {G} = require("@google/genai")

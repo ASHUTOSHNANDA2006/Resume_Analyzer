@@ -1,0 +1,12 @@
+.home{
+    width: 100%;
+    min-height: 100vh;
+
+    dispay: flex;
+    justify-content: center;
+    align-items: center;
+
+    .left{
+        background-color: #f0f0f0;
+    }
+}

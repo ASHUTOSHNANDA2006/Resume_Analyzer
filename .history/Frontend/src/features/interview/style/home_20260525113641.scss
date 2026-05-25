@@ -1,0 +1,32 @@
+.home{
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .interview-input-group{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    textarea{
+        height: 100%;
+        border: none;
+        outline: none;
+        padding-inline: 1rem;
+        padding-block: .75rem;
+        border-radius: .5rem;
+        background-color: #2
+    }
+
+    .left{
+        background-color: red;
+        align-self: stretch;
+    }
+    .right{
+        background-color: green;
+    }
+}
