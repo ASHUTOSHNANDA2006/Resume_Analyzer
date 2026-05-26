@@ -421,6 +421,23 @@ $severity-low: #3fb950;
         font-size: 0.75rem;
         color: $text-muted; 
         text-align: center;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+
+        &--high {
+            color: $severity-low; // green
+            font-weight: 600;
+            text-shadow: 0 0 6px rgba($severity-low, 0.25);
+        }
+        &--mid {
+            color: $severity-medium; // orange/yellow
+            font-weight: 600;
+            text-shadow: 0 0 6px rgba($severity-medium, 0.25);
+        }
+        &--low {
+            color: $severity-high; // red
+            font-weight: 600;
+            text-shadow: 0 0 6px rgba($severity-high, 0.25);
+        }
     }
 }
 
@@ -437,6 +454,54 @@ $severity-low: #3fb950;
         letter-spacing: 0.08em;
         color: $text-muted;
         margin: 0;
+    }
+
+    &__legend {
+        display: flex;
+        gap: 0.4rem;
+        margin-top: -0.25rem;
+        margin-bottom: 0.25rem;
+        flex-wrap: wrap;
+    }
+
+    .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: $text-muted;
+        cursor: pointer;
+        padding: 0.15rem 0.4rem;
+        border-radius: 0.25rem;
+        background-color: rgba($bg-panel, 0.5);
+        border: 1px solid rgba($border-color, 0.5);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+
+        &:hover {
+            color: $text-primary;
+            background-color: $bg-panel;
+            transform: translateY(-1px);
+        }
+
+        &--high:hover {
+            border-color: rgba($severity-high, 0.5);
+            box-shadow: 0 0 8px rgba($severity-high, 0.2);
+            color: $severity-high;
+        }
+
+        &--medium:hover {
+            border-color: rgba($severity-medium, 0.5);
+            box-shadow: 0 0 8px rgba($severity-medium, 0.2);
+            color: $severity-medium;
+        }
+
+        &--low:hover {
+            border-color: rgba($severity-low, 0.5);
+            box-shadow: 0 0 8px rgba($severity-low, 0.2);
+            color: $severity-low;
+        }
     }
 
     &__list {

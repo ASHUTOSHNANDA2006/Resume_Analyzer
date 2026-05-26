@@ -8,44 +8,67 @@ export const useAuth = () => {
 
     const context = useContext(AuthContext)
 
-    const {user,setUser,loading,setLoading} = context
+    const {user,setUser,loading,setLoading,toast,showToast} = context
 
 
     const handleLogin = async ({email,password}) => {
-
         setLoading(true)
-        try{
+        try {
             const data = await login({email,password})
-            setUser(data.user) 
-        }catch(err){
-
-        }finally{
+            if (data && data.user) {
+                setUser(data.user)
+                showToast(`Welcome back, ${data.user.username}!`, "success")
+                return { success: true }
+            } else {
+                throw new Error("Invalid credentials or server error")
+            }
+        } catch(err) {
+            console.error("Login hook error:", err)
+            const errMsg = err?.response?.data?.message || err?.message || "Invalid email or password"
+            showToast(errMsg, "error")
+            return { success: false, error: errMsg }
+        } finally {
             setLoading(false)
         }
     }
 
     const handleRegister = async ({username,email,password}) => {
-
         setLoading(true)
-        try{
+        try {
             const data = await register({username,email,password})
-            setUser(data.user)
-        }catch(err){
-
-        }finally{
+            if (data && data.user) {
+                setUser(data.user)
+                showToast("Account created successfully! Welcome to InterviewIntel.", "success")
+                return { success: true }
+            } else {
+                throw new Error("Registration failed")
+            }
+        } catch(err) {
+            console.error("Register hook error:", err)
+            const errMsg = err?.response?.data?.message || err?.message || "Registration failed. Try a different username/email."
+            showToast(errMsg, "error")
+            return { success: false, error: errMsg }
+        } finally {
             setLoading(false)
         }
     }
 
     const handleLogout = async () => {
-
         setLoading(true)
-        try{
+        try {
+            // 1. Hit logout API first to let the server blacklist the token from the cookie
             await logout()
+        } catch(err) {
+            console.log("Logout API error (frontend fallback triggered):", err)
+        } finally {
+            // 2. Wipe frontend auth tokens & data from cookies and localStorage
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+            localStorage.removeItem("token")
+            localStorage.removeItem("user")
+            
+            // 3. Clear auth context state
             setUser(null)
-        }catch(err){
-
-        }finally{
+            showToast("Logged out successfully.", "success")
             setLoading(false)
         }
     }
@@ -66,5 +89,5 @@ export const useAuth = () => {
     },[])
 
 
-    return {user,loading,handleLogin,handleRegister,handleLogout}
+    return {user,loading,handleLogin,handleRegister,handleLogout,toast,showToast}
 }

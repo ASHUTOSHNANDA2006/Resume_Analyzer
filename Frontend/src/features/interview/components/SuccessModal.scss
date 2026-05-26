@@ -1,0 +1,145 @@
+.success-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(12px);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    font-family: 'Outfit', system-ui, sans-serif;
+    color: #ffffff;
+
+    .success-modal-container {
+        width: 100%;
+        max-width: 460px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 3.5rem 2.5rem;
+        background: rgba(20, 20, 20, 0.7);
+        border: 1px solid rgba(39, 201, 63, 0.25);
+        border-radius: 1.5rem;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(39, 201, 63, 0.08);
+        animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+    }
+
+    // Success Checkmark Styling and Keyframes
+    .success-checkmark-wrapper {
+        margin-bottom: 0.5rem;
+
+        .checkmark-circle {
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .checkmark-svg {
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 2.5;
+            stroke: #27c93f;
+            stroke-miterlimit: 10;
+            box-shadow: inset 0px 0px 0px #27c93f;
+            animation: fillCircle .4s ease-in-out .4s forwards, scaleBounce .3s ease-in-out .9s forwards;
+        }
+
+        .checkmark-circle-outline {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2.5;
+            stroke-miterlimit: 10;
+            stroke: #27c93f;
+            fill: none;
+            animation: drawOutline .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .checkmark-kick {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke: #ffffff;
+            animation: drawKick .3s cubic-bezier(0.65, 0, 0.45, 1) .6s forwards;
+        }
+    }
+
+    h2 {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: #27c93f;
+        letter-spacing: -0.5px;
+        margin: 0;
+    }
+
+    p {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.5;
+        margin: 0;
+        max-width: 380px;
+    }
+
+    .success-redirect-loader {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        background-color: rgba(255, 255, 255, 0.03);
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+
+        span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .tiny-spinner {
+            width: 12px;
+            height: 12px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: #27c93f;
+            animation: spin 0.8s linear infinite;
+        }
+    }
+}
+
+// Keyframes
+@keyframes scaleUp {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes drawOutline {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes drawKick {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes fillCircle {
+    100% { box-shadow: inset 0px 0px 0px 50px #27c93f; }
+}
+
+@keyframes scaleBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

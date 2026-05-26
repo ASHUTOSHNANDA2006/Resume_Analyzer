@@ -1,0 +1,75 @@
+.toast-notification-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+    pointer-events: none;
+    animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+    .toast-card {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.85rem 1.25rem;
+        border-radius: 1rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        max-width: 380px;
+        pointer-events: auto;
+        
+        // Premium Glassmorphism
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+
+    &.success .toast-card {
+        background: rgba(16, 26, 18, 0.85);
+        border: 1px solid rgba(74, 222, 128, 0.25);
+        color: #4ade80;
+
+        .toast-icon {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+    }
+
+    &.error .toast-card {
+        background: rgba(30, 16, 20, 0.85);
+        border: 1px solid rgba(248, 113, 113, 0.25);
+        color: #f87171;
+
+        .toast-icon {
+            color: #f87171;
+            background: rgba(248, 113, 113, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+    }
+
+    .toast-message {
+        line-height: 1.4;
+    }
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

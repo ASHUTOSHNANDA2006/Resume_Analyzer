@@ -1,0 +1,229 @@
+.navbar-header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .navbar-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.35rem;
+        letter-spacing: -0.5px;
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: scale(1.02);
+
+            .logo-icon {
+                transform: rotate(-10deg) scale(1.1);
+                filter: drop-shadow(0 0 10px rgba(225, 3, 77, 0.4));
+            }
+        }
+
+        .logo-icon {
+            font-size: 1.6rem;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #ffffff 60%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-highlight {
+            color: #e1034d;
+            -webkit-text-fill-color: #e1034d;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(90deg, #e1034d, #ff578a);
+                border-radius: 2px;
+            }
+        }
+    }
+
+    .navbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        @media (max-width: 768px) {
+            display: none; // Stack responsive hamburger/menu later or just simple clean layout
+        }
+
+        .nav-link,
+        .nav-link-btn {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            position: relative;
+            padding: 0.25rem 0;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background-color: #e1034d;
+                transition: width 0.25s ease;
+            }
+
+            &:hover {
+                color: #ffffff;
+                
+                &::after {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .auth-btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+
+            &.login-btn {
+                color: rgba(255, 255, 255, 0.85);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                background: transparent;
+
+                &:hover {
+                    color: #ffffff;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-color: rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            &.register-btn {
+                background: linear-gradient(135deg, #e1034d 0%, #ff1e6f 100%);
+                color: #ffffff;
+                border: none;
+                box-shadow: 0 4px 14px rgba(225, 3, 77, 0.25);
+
+                &:hover {
+                    transform: translateY(-1.5px);
+                    box-shadow: 0 6px 20px rgba(225, 3, 77, 0.35);
+                    background: linear-gradient(135deg, #ff1e6f 0%, #ff578a 100%);
+                }
+
+                &:active {
+                    transform: translateY(0.5px);
+                }
+            }
+        }
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .user-welcome {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.85rem;
+
+            strong {
+                color: #ffffff;
+            }
+
+            @media (max-width: 600px) {
+                display: none;
+            }
+        }
+
+        .profile-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(225, 3, 77, 0.2) 0%, rgba(255, 30, 111, 0.1) 100%);
+            border: 1.5px solid rgba(225, 3, 77, 0.5);
+            color: #ff1e6f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 0 10px rgba(225, 3, 77, 0.1);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 0.5rem 0.9rem;
+            border-radius: 0.6rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            svg {
+                transition: transform 0.2s ease;
+            }
+
+            &:hover {
+                color: #ff4d79;
+                border-color: rgba(255, 77, 121, 0.3);
+                background: rgba(255, 77, 121, 0.05);
+
+                svg {
+                    transform: translateX(2px);
+                }
+            }
+        }
+    }
+}

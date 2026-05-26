@@ -4,62 +4,120 @@ import "../auth.form.scss"
 import { useAuth } from "../hooks/useAuth"
 
 const Login = () => {
-
-
-    const { loading, handleLogin } = useAuth()
+    const { handleLogin, showToast } = useAuth()
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const validateForm = () => {
+        if (!email.trim()) {
+            showToast("Email address is required.", "error")
+            return false
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(email.trim())) {
+            showToast("Please enter a valid email address.", "error")
+            return false
+        }
+
+        if (!password) {
+            showToast("Password is required.", "error")
+            return false
+        }
+
+        return true
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await handleLogin({ email, password })
-        navigate("/")
-    }
 
-    if (loading) {
-        return (<main><h1>Loading...</h1></main>)
+        if (!validateForm()) return
+
+        setIsSubmitting(true)
+        const result = await handleLogin({ email: email.trim(), password })
+        setIsSubmitting(false)
+
+        if (result && result.success) {
+            navigate("/")
+        }
     }
 
     return (
         <main>
             <div className="form-container">
-                <h1>Login</h1>
+                <Link to="/" className="auth-logo">
+                    <span className="logo-icon">🧠</span>
+                    <span className="logo-text">Interview<span>Intel</span></span>
+                </Link>
 
-                <form onSubmit={handleSubmit}>
+                <h1>Welcome Back</h1>
+                <p className="auth-subtitle">Elevate your interview preparation today</p>
 
+                <form onSubmit={handleSubmit} noValidate>
                     <div className="input-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            onChange={(e) => {setEmail(e.target.value)}}
-                            type='email'
-                            id='email'
-                            name='email'
-                            placeholder='Enter Email Address'
-                        />
+                        <label htmlFor="email">Email Address</label>
+                        <div className="input-wrapper">
+                            <span className="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                            </span>
+                            <input
+                                onChange={(e) => setEmail(e.target.value)}
+                                type='email'
+                                id='email'
+                                name='email'
+                                value={email}
+                                placeholder='name@example.com'
+                                disabled={isSubmitting}
+                            />
+                        </div>
                     </div>
 
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input
-                            onChange={(e) => {setPassword(e.target.value)}}
-                            type='password'
-                            id='password'
-                            name='password'
-                            placeholder='Enter Password'
-                        />
+                        <div className="input-wrapper">
+                            <span className="input-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                            </span>
+                            <input
+                                onChange={(e) => setPassword(e.target.value)}
+                                type='password'
+                                id='password'
+                                name='password'
+                                value={password}
+                                placeholder='••••••••'
+                                disabled={isSubmitting}
+                            />
+                        </div>
                     </div>
 
-                    <button className='button primary-button'>
-                        Login
+                    <button 
+                        type="submit" 
+                        className='submit-btn'
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? (
+                            <>
+                                <span className="spinner"></span>
+                                Logging in...
+                            </>
+                        ) : (
+                            "Sign In"
+                        )}
                     </button>
-
                 </form>
 
                 <p>
                     Don't have an account?
-                    <Link to={"/register"}> Register here</Link>
+                    <Link to="/register"> Register here</Link>
                 </p>
             </div>
         </main>
